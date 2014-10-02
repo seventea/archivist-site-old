@@ -1,0 +1,77 @@
+html { 
+  background: url(data:image/gif;base64,R0lGODlhAQABAAAAACwAAAAAAQABAAA=) #000000 no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  min-width: 825px;
+
+  font-family: 'Droid Serif', serif;
+  font-size: 18px;
+  color: #ffffff;
+  height: 100%;
+
+  -webkit-transition-property: background-image;
+  -webkit-transition-duration: 500ms;
+  -webkit-transition-timing-function: ease-in;
+  -moz-transition-property: background-image;
+  -moz-transition-duration: 500ms;
+  -moz-transition-timing-function: ease-in;
+  -o-transition-property: background-image;
+  -o-transition-duration: 500ms;
+  -o-transition-timing-function: ease-in;
+  transition-property: background-image;
+  transition-duration: 500ms;
+  transition-timing-function: ease-in;
+}
+
+body {
+  height: 100%;
+}
+
+.strip {
+  background: url("images/vertical_brush.png") no-repeat center top;
+  width: 775px;
+  float: right;
+  margin-right: 25px;
+  height: 100%;
+}
+
+.inner-strip {
+  width: 350px;
+  margin: auto;
+}
+
+.now-playing {
+  margin-top: 10px;
+  text-align: center;
+}
+
+.logo img {
+  width: 786px;
+  height: 247px;
+}
+
+.radio-icons {
+  margin-top: 10px;
+  padding: 0 15px;
+  overflow: hidden;
+  text-align: center;
+}
+
+.radio-icons a {
+  padding: 0 15px;
+  width: 130px;
+  height: 130px;'
+  display: block;
+  float: left;
+}
+
+.definition {
+  margin-top: 10px;
+  font-size: 18px;
+  line-height: 40px;
+  text-align: justify;
+  -moz-text-align-last: right;
+  text-align-last: right;
+}
