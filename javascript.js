@@ -33,7 +33,7 @@
             var self = this, image;
 
             if (!self.preloadedImages[url]) {
-                image = new Image();
+                image = document.createElement('img');
                 image.addEventListener('load', function () {
                     self.preloadedImages[url] = image;
                     if (callback) {
