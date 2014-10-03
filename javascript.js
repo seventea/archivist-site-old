@@ -86,7 +86,7 @@
             if (currentBackground > backgrounds.length - 1) {
                 currentBackground = 0;
             }
-            html.style.backgroundImage = 'url("' + backgrounds[currentBackground] + '")'
+            html.style.backgroundImage = 'url("' + backgrounds[currentBackground] + '")';
         };
 
         window.setTimeout(function () {
