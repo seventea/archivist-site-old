@@ -65,12 +65,14 @@
         playButton.addEventListener('click', function (event) {
             stream.start();
             nowPlaying.style.visibility = '';
+            nowPlaying.className = nowPlaying.className + ' flash';
             event.preventDefault();
         });
 
         pauseButton.addEventListener('click', function (event) {
             stream.stop();
             nowPlaying.style.visibility = 'hidden';
+            nowPlaying.className = nowPlaying.className.replace(' flash', '');
             event.preventDefault();
         });
 
