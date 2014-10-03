@@ -4,27 +4,26 @@
 
         Archivist.AudioStream = function (url) {
             this.url = url;
-            this.audioElement = null;
+            this.sound = null;
         };
 
         Archivist.AudioStream.prototype.start = function () {
             var self = this;
 
-            if (!self.audioElement) {
-                self.audioElement = document.createElement('audio');
-                self.audioElement.src = self.url;
-                self.audioElement.play();
+            if (!self.sound) {
+                self.sound = soundManager.createSound({
+                    url: self.url
+                });
+                self.sound.play();
             }
         };
 
         Archivist.AudioStream.prototype.stop = function () {
             var self = this;
 
-            if (self.audioElement) {
-                self.audioElement.pause();
-                self.audioElement.src = null;
-                self.audioElement.removeAttribute('src');
-                self.audioElement = null;
+            if (self.sound) {
+                self.sound.unload();
+                self.sound = null;
             }
         };
 
@@ -62,18 +61,28 @@
             pauseButton = document.getElementById('pause_button'),
             stream = new Archivist.AudioStream('http://192.240.102.195:8689/stream');
 
-        playButton.addEventListener('click', function (event) {
-            stream.start();
-            nowPlaying.style.visibility = '';
-            nowPlaying.className = nowPlaying.className + ' flash';
-            event.preventDefault();
-        });
+        soundManager.setup({
+            // where to find flash audio SWFs, as needed
+            url: 'assets/flash/',
+            preferFlash: true,
+            onready: function () {
+                playButton.addEventListener('click', function (event) {
+                    stream.start();
+                    nowPlaying.style.visibility = '';
+                    nowPlaying.className = nowPlaying.className + ' flash';
+                    event.preventDefault();
+                });
 
-        pauseButton.addEventListener('click', function (event) {
-            stream.stop();
-            nowPlaying.style.visibility = 'hidden';
-            nowPlaying.className = nowPlaying.className.replace(' flash', '');
-            event.preventDefault();
+                pauseButton.addEventListener('click', function (event) {
+                    stream.stop();
+                    nowPlaying.style.visibility = 'hidden';
+                    nowPlaying.className = nowPlaying.className.replace(' flash', '');
+                    event.preventDefault();
+                });
+            },
+            ontimeout: function () {
+                // Hrmm, SM2 could not start. Missing SWF? Flash blocked? Show an error, etc.?
+            }
         });
 
         var backgrounds = [
