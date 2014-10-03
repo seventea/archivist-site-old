@@ -60,7 +60,7 @@
             nowPlaying = document.getElementById('now_playing'),
             playButton = document.getElementById('play_button'),
             pauseButton = document.getElementById('pause_button'),
-            stream = new Archivist.AudioStream('http://icy-e-04.sharp-stream.com:80/ucbbible.mp3');
+            stream = new Archivist.AudioStream('http://192.240.102.195:8689/stream');
 
         playButton.addEventListener('click', function (event) {
             stream.start();
