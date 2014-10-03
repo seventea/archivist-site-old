@@ -51,7 +51,7 @@
         Archivist.preloadImages = function (images) {
             var self = this;
 
-            for (i = 0; i < images.length; i++) {
+            for (var i = 0; i < images.length; i++) {
                 self.preloadImage(images[i]);
             }
         };
