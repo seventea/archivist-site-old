@@ -77,9 +77,9 @@
         });
 
         var backgrounds = [
-                'images/backgrounds/microphone.png',
-                'images/backgrounds/truck.png',
-                'images/backgrounds/vinyl.png'
+                'assets/images/backgrounds/microphone.png',
+                'assets/images/backgrounds/truck.png',
+                'assets/images/backgrounds/vinyl.png'
             ],
             currentBackground = -1;
 

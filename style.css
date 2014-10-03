@@ -30,7 +30,7 @@ body {
 }
 
 .strip {
-    background: url("images/vertical_brush.png") no-repeat center top;
+    background: url("assets/images/vertical_brush.png") no-repeat center top;
     width: 775px;
     float: right;
     margin-right: 25px;
