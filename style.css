@@ -60,11 +60,16 @@ body {
 }
 
 .radio-icons a {
+    position: relative;
     padding: 0 15px;
     width: 130px;
     height: 130px;
     display: block;
     float: left;
+}
+
+.radio-icons a:active {
+    top: 5px;
 }
 
 .definition {
