@@ -29,14 +29,20 @@
             this.sound = null;
         };
 
-        Archivist.AudioStream.prototype.start = function () {
+        Archivist.AudioStream.prototype.start = function (onload) {
             var self = this;
 
             if (!self.sound) {
                 self.sound = soundManager.createSound({
                     url: self.url
                 });
-                self.sound.play();
+                self.sound.play({
+                    onload: function() {
+                        if (onload) {
+                            onload();
+                        }
+                    }
+                });
             }
         };
 
@@ -88,7 +94,9 @@
             preferFlash: true,
             onready: function () {
                 Archivist.addEvent(playButton, 'click', function (event) {
-                    stream.start();
+                    stream.start(function() {
+                        nowPlaying.className = nowPlaying.className.replace(' flash', '');
+                    });
                     nowPlaying.style.visibility = '';
                     nowPlaying.className = nowPlaying.className + ' flash';
                     playButton.style.display = 'none';
