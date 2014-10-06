@@ -109,21 +109,12 @@ body {
 
 .radio-icons {
     margin-top: 10px;
-    width: 320px;
-    height: 135px;
+    height: 130px;
     text-align: center;
 }
 
 .radio-icons a {
-    position: relative;
-    padding: 0 15px;
-    height: 130px;
     display: block;
-    text-align: center;
-}
-
-.radio-icons a:active {
-    top: 5px;
 }
 
 .definition {
