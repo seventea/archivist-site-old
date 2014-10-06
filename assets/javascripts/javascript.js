@@ -91,6 +91,8 @@
                     stream.start();
                     nowPlaying.style.visibility = '';
                     nowPlaying.className = nowPlaying.className + ' flash';
+                    playButton.style.display = 'none';
+                    pauseButton.style.display = 'block';
                     Archivist.preventDefault(event);
                 });
 
@@ -98,6 +100,8 @@
                     stream.stop();
                     nowPlaying.style.visibility = 'hidden';
                     nowPlaying.className = nowPlaying.className.replace(' flash', '');
+                    pauseButton.style.display = 'none';
+                    playButton.style.display = 'block';
                     Archivist.preventDefault(event);
                 });
             },

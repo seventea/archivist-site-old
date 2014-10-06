@@ -109,7 +109,6 @@ body {
 
 .radio-icons {
     margin-top: 10px;
-    padding: 0 15px;
     width: 320px;
     height: 135px;
     text-align: center;
@@ -118,10 +117,9 @@ body {
 .radio-icons a {
     position: relative;
     padding: 0 15px;
-    width: 130px;
     height: 130px;
     display: block;
-    float: left;
+    text-align: center;
 }
 
 .radio-icons a:active {
