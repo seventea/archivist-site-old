@@ -62,7 +62,6 @@
             stream = new Archivist.AudioStream('http://192.240.102.195:8689/stream');
 
         soundManager.setup({
-            // where to find flash audio SWFs, as needed
             url: 'assets/flash/',
             preferFlash: true,
             onready: function () {
