@@ -111,6 +111,7 @@ body {
     margin-top: 10px;
     height: 130px;
     text-align: center;
+    overflow: hidden;
 }
 
 .radio-icons a {

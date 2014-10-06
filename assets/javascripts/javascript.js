@@ -118,6 +118,9 @@
             }
         });
 
+        // Hide pause button on load to fix iepngfix related error
+        pauseButton.style.display = 'none';
+
         var backgrounds = [
                 'assets/images/backgrounds/microphone.png',
                 'assets/images/backgrounds/truck.png',
