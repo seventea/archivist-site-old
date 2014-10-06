@@ -2,6 +2,28 @@
     window.onload = function () {
         window.Archivist = {};
 
+        // Wrapper for addEventListener vs attachEvent
+        // Shamelessly stolen from http://ejohn.org/projects/flexible-javascript-events/
+        Archivist.addEvent = function (object, eventType, handler) {
+            if (object.attachEvent) {
+                object['e' + eventType + handler] = handler;
+                object[eventType + handler] = function () {
+                    object['e' + eventType + handler](window.event);
+                };
+                object.attachEvent('on' + eventType, object[eventType + handler]);
+            } else {
+                object.addEventListener(eventType, handler, false);
+            }
+        };
+
+        // Wrapper for event.preventDefault vs event.returnValue = false
+        Archivist.preventDefault = function (event) {
+            event.returnValue = false;
+            if (event.preventDefault) {
+                event.preventDefault();
+            }
+        };
+
         Archivist.AudioStream = function (url) {
             this.url = url;
             this.sound = null;
@@ -33,7 +55,7 @@
 
             if (!self.preloadedImages[url]) {
                 image = document.createElement('img');
-                image.addEventListener('load', function () {
+                Archivist.addEvent(image, 'load', function () {
                     self.preloadedImages[url] = image;
                     if (callback) {
                         callback();
@@ -65,18 +87,18 @@
             url: 'assets/flash/',
             preferFlash: true,
             onready: function () {
-                playButton.addEventListener('click', function (event) {
+                Archivist.addEvent(playButton, 'click', function (event) {
                     stream.start();
                     nowPlaying.style.visibility = '';
                     nowPlaying.className = nowPlaying.className + ' flash';
-                    event.preventDefault();
+                    Archivist.preventDefault(event);
                 });
 
-                pauseButton.addEventListener('click', function (event) {
+                Archivist.addEvent(pauseButton, 'click', function (event) {
                     stream.stop();
                     nowPlaying.style.visibility = 'hidden';
                     nowPlaying.className = nowPlaying.className.replace(' flash', '');
-                    event.preventDefault();
+                    Archivist.preventDefault(event);
                 });
             },
             ontimeout: function () {
