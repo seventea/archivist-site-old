@@ -124,9 +124,9 @@
         pauseButton.style.display = 'none';
 
         var backgrounds = [
-                'assets/images/backgrounds/microphone.png',
-                'assets/images/backgrounds/truck.png',
-                'assets/images/backgrounds/vinyl.png'
+                'assets/images/backgrounds/microphone.jpg',
+                'assets/images/backgrounds/truck.jpg',
+                'assets/images/backgrounds/vinyl.jpg'
             ],
             currentBackground = -1;
 
