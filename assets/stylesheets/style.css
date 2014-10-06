@@ -9,7 +9,6 @@ html {
     font-family: 'Droid Serif', serif;
     font-size: 18px;
     color: #ffffff;
-    height: 100%;
 
     -webkit-transition-property: background-image;
     -webkit-transition-duration: 500ms;
@@ -125,4 +124,5 @@ body {
     text-align: justify;
     -moz-text-align-last: right;
     text-align-last: right;
+    padding-bottom: 25px;
 }

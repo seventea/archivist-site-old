@@ -83,7 +83,9 @@
             }
         };
 
-        var html = document.getElementById('html'),
+        var html = document.documentElement,
+            body = document.body,
+            strip = document.getElementById('strip'),
             nowPlaying = document.getElementById('now_playing'),
             playButton = document.getElementById('play_button'),
             pauseButton = document.getElementById('pause_button'),
@@ -147,5 +149,15 @@
         window.setInterval(function () {
             nextBackground();
         }, 30 * 1000);
+
+        var fixStripHeight = function () {
+            strip.style.height = '';
+            strip.style.height =
+                Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight)
+                + 'px';
+        };
+
+        fixStripHeight();
+        window.onresize = fixStripHeight;
     };
 })(window, document);
