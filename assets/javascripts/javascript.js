@@ -89,7 +89,7 @@
             nowPlaying = document.getElementById('now_playing'),
             playButton = document.getElementById('play_button'),
             pauseButton = document.getElementById('pause_button'),
-            stream = new Archivist.AudioStream('http://192.240.102.195:8689/stream');
+            stream = new Archivist.AudioStream('http://50.7.76.250:8765/stream');
 
         soundManager.setup({
             url: 'assets/flash/',
