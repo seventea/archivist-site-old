@@ -28,12 +28,17 @@
             var self = this;
 
             self.url = url;
+            self.reloadInterval = 30 * 60 * 1000;
 
             soundManager.setup({
                 url: 'assets/flash/',
                 preferFlash: true,
                 onready: function () {
                     self.sound = self.load();
+
+                    window.setInterval(function () {
+                        self.reload();
+                    }, self.reloadInterval);
                 },
                 ontimeout: function () {
                     // Hrmm, SM2 could not start. Missing SWF? Flash blocked? Show an error, etc.?
@@ -65,6 +70,23 @@
                         callback();
                     }
                 }
+            });
+        };
+
+        Archivist.AudioStream.prototype.reload = function () {
+            var self = this;
+
+            var replacement = self.load(function () {
+                var originalSound = self.sound,
+                    originalVolume = self.sound.volume;
+
+                originalSound.setVolume(0);
+                self.sound = replacement;
+                self.sound.setVolume(originalVolume);
+
+                originalSound.stop();
+                originalSound.unload();
+                originalSound = null;
             });
         };
 
