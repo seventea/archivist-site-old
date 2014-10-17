@@ -25,34 +25,47 @@
         };
 
         Archivist.AudioStream = function (url) {
-            this.url = url;
-            this.sound = null;
-        };
-
-        Archivist.AudioStream.prototype.start = function (onload) {
             var self = this;
 
-            if (!self.sound) {
-                self.sound = soundManager.createSound({
-                    url: self.url
-                });
-                self.sound.play({
-                    onload: function() {
-                        if (onload) {
-                            onload();
-                        }
-                    }
-                });
-            }
+            self.url = url;
+
+            soundManager.setup({
+                url: 'assets/flash/',
+                preferFlash: true,
+                onready: function () {
+                    self.sound = self.load();
+                },
+                ontimeout: function () {
+                    // Hrmm, SM2 could not start. Missing SWF? Flash blocked? Show an error, etc.?
+                }
+            });
+        };
+
+        Archivist.AudioStream.prototype.start = function () {
+            var self = this;
+
+            self.sound.setVolume(100);
         };
 
         Archivist.AudioStream.prototype.stop = function () {
             var self = this;
 
-            if (self.sound) {
-                self.sound.unload();
-                self.sound = null;
-            }
+            self.sound.setVolume(0);
+        };
+
+        Archivist.AudioStream.prototype.load = function (callback) {
+            var self = this;
+
+            return soundManager.createSound({
+                url: self.url,
+                volume: 0,
+                autoPlay: true,
+                onload: function() {
+                    if (callback) {
+                        callback();
+                    }
+                }
+            });
         };
 
         Archivist.preloadedImages = {};
@@ -91,33 +104,20 @@
             pauseButton = document.getElementById('pause_button'),
             stream = new Archivist.AudioStream('http://50.7.76.250:8765/stream');
 
-        soundManager.setup({
-            url: 'assets/flash/',
-            preferFlash: true,
-            onready: function () {
-                Archivist.addEvent(playButton, 'click', function (event) {
-                    stream.start(function() {
-                        nowPlaying.className = nowPlaying.className.replace(' flash', '');
-                    });
-                    nowPlaying.style.visibility = '';
-                    nowPlaying.className = nowPlaying.className + ' flash';
-                    playButton.style.display = 'none';
-                    pauseButton.style.display = 'block';
-                    Archivist.preventDefault(event);
-                });
+        Archivist.addEvent(playButton, 'click', function (event) {
+            stream.start();
+            nowPlaying.style.visibility = '';
+            playButton.style.display = 'none';
+            pauseButton.style.display = 'block';
+            Archivist.preventDefault(event);
+        });
 
-                Archivist.addEvent(pauseButton, 'click', function (event) {
-                    stream.stop();
-                    nowPlaying.style.visibility = 'hidden';
-                    nowPlaying.className = nowPlaying.className.replace(' flash', '');
-                    pauseButton.style.display = 'none';
-                    playButton.style.display = 'block';
-                    Archivist.preventDefault(event);
-                });
-            },
-            ontimeout: function () {
-                // Hrmm, SM2 could not start. Missing SWF? Flash blocked? Show an error, etc.?
-            }
+        Archivist.addEvent(pauseButton, 'click', function (event) {
+            stream.stop();
+            nowPlaying.style.visibility = 'hidden';
+            pauseButton.style.display = 'none';
+            playButton.style.display = 'block';
+            Archivist.preventDefault(event);
         });
 
         // Hide pause button on load to fix iepngfix related error
