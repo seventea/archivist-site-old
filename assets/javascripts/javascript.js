@@ -64,6 +64,14 @@
                     if (callback) {
                         callback();
                     }
+                },
+                whileloading: function () {
+                    if (!this.loaded && !this.loadinghack && this.bytesLoaded > 300000) {
+                        this.loadinghack = true;
+                        if (callback) {
+                            callback();
+                        }
+                    }
                 }
             });
         };
