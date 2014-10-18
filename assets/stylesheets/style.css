@@ -58,8 +58,16 @@ body {
     overflow: hidden;
 }
 
-.radio-icons a {
+.radio-icons a.radio-icon {
     display: block;
+}
+
+.stream-error {
+    padding: 20px 0;
+}
+
+.stream-error a {
+    color: #0000ff;
 }
 
 .definition {

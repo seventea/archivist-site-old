@@ -36,7 +36,7 @@
                     self.sound = self.load();
                 },
                 ontimeout: function () {
-                    // Hrmm, SM2 could not start. Missing SWF? Flash blocked? Show an error, etc.?
+                    document.getElementById('stream_error').style.display = 'block';
                 }
             });
         };
