@@ -28,7 +28,7 @@
             var self = this;
 
             self.url = url;
-            self.reloadInterval = 60 * 60 * 1000;
+            self.reloadInterval = 30 * 1000;
 
             soundManager.setup({
                 url: 'assets/flash/',
@@ -83,8 +83,15 @@
 
         Archivist.AudioStream.prototype.reload = function () {
             var self = this;
+            try {
+                console.log('Reloading stream');
+            } catch (e) {}
 
             var replacement = self.load(function () {
+                try {
+                    console.log('Loaded replacement stream');
+                } catch (e) {}
+
                 var originalSound = self.sound,
                     originalVolume = self.sound.volume;
 
@@ -96,6 +103,10 @@
                 originalSound.unload();
                 originalSound.destruct();
                 originalSound = null;
+
+                try {
+                    console.log('Replaced stream');
+                } catch (e) {}
             });
         };
 
