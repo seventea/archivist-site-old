@@ -28,12 +28,17 @@
             var self = this;
 
             self.url = url;
+            self.reloadInterval = 60 * 60 * 1000;
 
             soundManager.setup({
                 url: 'assets/flash/',
                 preferFlash: true,
                 onready: function () {
                     self.sound = self.load(callback);
+
+                    window.setInterval(function () {
+                        self.reload();
+                    }, self.reloadInterval);
                 },
                 ontimeout: function () {
                     document.getElementById('stream_error').style.display = 'block';
@@ -73,6 +78,24 @@
                         }
                     }
                 }
+            });
+        };
+
+        Archivist.AudioStream.prototype.reload = function () {
+            var self = this;
+
+            var replacement = self.load(function () {
+                var originalSound = self.sound,
+                    originalVolume = self.sound.volume;
+
+                originalSound.setVolume(0);
+                self.sound = replacement;
+                self.sound.setVolume(originalVolume);
+
+                originalSound.stop();
+                originalSound.unload();
+                originalSound.destruct();
+                originalSound = null;
             });
         };
 
