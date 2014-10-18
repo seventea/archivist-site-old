@@ -53,18 +53,13 @@
             self.sound.setVolume(0);
         };
 
-        Archivist.AudioStream.prototype.load = function (callback) {
+        Archivist.AudioStream.prototype.load = function () {
             var self = this;
 
             return soundManager.createSound({
                 url: self.url,
                 volume: 0,
-                autoPlay: true,
-                onload: function() {
-                    if (callback) {
-                        callback();
-                    }
-                }
+                autoPlay: true
             });
         };
 
