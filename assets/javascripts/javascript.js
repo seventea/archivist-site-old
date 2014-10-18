@@ -24,7 +24,7 @@
             }
         };
 
-        Archivist.AudioStream = function (url) {
+        Archivist.AudioStream = function (url, callback) {
             var self = this;
 
             self.url = url;
@@ -33,7 +33,7 @@
                 url: 'assets/flash/',
                 preferFlash: true,
                 onready: function () {
-                    self.sound = self.load();
+                    self.sound = self.load(callback);
                 },
                 ontimeout: function () {
                     document.getElementById('stream_error').style.display = 'block';
@@ -53,13 +53,18 @@
             self.sound.setVolume(0);
         };
 
-        Archivist.AudioStream.prototype.load = function () {
+        Archivist.AudioStream.prototype.load = function (callback) {
             var self = this;
 
             return soundManager.createSound({
                 url: self.url,
                 volume: 0,
-                autoPlay: true
+                autoPlay: true,
+                onload: function () {
+                    if (callback) {
+                        callback();
+                    }
+                }
             });
         };
 
@@ -95,28 +100,34 @@
             body = document.body,
             strip = document.getElementById('strip'),
             nowPlaying = document.getElementById('now_playing'),
+            loadingSpinner = document.getElementById('loading_spinner'),
             playButton = document.getElementById('play_button'),
-            pauseButton = document.getElementById('pause_button'),
-            stream = new Archivist.AudioStream('http://50.7.76.250:8765/stream');
-
-        Archivist.addEvent(playButton, 'click', function (event) {
-            stream.start();
-            nowPlaying.style.visibility = '';
-            playButton.style.display = 'none';
-            pauseButton.style.display = 'block';
-            Archivist.preventDefault(event);
-        });
-
-        Archivist.addEvent(pauseButton, 'click', function (event) {
-            stream.stop();
-            nowPlaying.style.visibility = 'hidden';
-            pauseButton.style.display = 'none';
-            playButton.style.display = 'block';
-            Archivist.preventDefault(event);
-        });
+            pauseButton = document.getElementById('pause_button');
 
         // Hide pause button on load to fix iepngfix related error
+        playButton.style.display = 'none';
         pauseButton.style.display = 'none';
+
+        var stream = new Archivist.AudioStream('http://50.7.76.250:8765/stream', function () {
+            Archivist.addEvent(playButton, 'click', function (event) {
+                stream.start();
+                nowPlaying.style.visibility = '';
+                playButton.style.display = 'none';
+                pauseButton.style.display = 'block';
+                Archivist.preventDefault(event);
+            });
+
+            Archivist.addEvent(pauseButton, 'click', function (event) {
+                stream.stop();
+                nowPlaying.style.visibility = 'hidden';
+                pauseButton.style.display = 'none';
+                playButton.style.display = 'block';
+                Archivist.preventDefault(event);
+            });
+
+            loadingSpinner.style.display = 'none';
+            playButton.style.display = 'block';
+        });
 
         var backgrounds = [
                 'assets/images/backgrounds/microphone.jpg',

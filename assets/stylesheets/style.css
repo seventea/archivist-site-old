@@ -58,6 +58,10 @@ body {
     overflow: hidden;
 }
 
+.loading-spinner {
+    padding: 20px 0;
+}
+
 .radio-icons a.radio-icon {
     display: block;
 }
