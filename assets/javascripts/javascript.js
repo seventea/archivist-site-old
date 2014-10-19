@@ -2,6 +2,17 @@
     window.onload = function () {
         window.Archivist = {};
 
+        Archivist.Ui = {
+            html: document.documentElement,
+            body: document.body,
+            strip: document.getElementById('strip'),
+            nowPlaying: document.getElementById('now_playing'),
+            loadingSpinner: document.getElementById('loading_spinner'),
+            playButton: document.getElementById('play_button'),
+            pauseButton: document.getElementById('pause_button'),
+            streamError: document.getElementById('stream_error')
+        };
+
         // Wrapper for addEventListener vs attachEvent
         // Shamelessly stolen from http://ejohn.org/projects/flexible-javascript-events/
         Archivist.addEvent = function (object, eventType, handler) {
@@ -36,7 +47,8 @@
                     self.sound = self.load(callback);
                 },
                 ontimeout: function () {
-                    document.getElementById('stream_error').style.display = 'block';
+                    Archivist.Ui.streamError.style.display = 'block';
+                    Archivist.Ui.loadingSpinner.style.display = 'none';
                 }
             });
         };
@@ -104,37 +116,29 @@
             }
         };
 
-        var html = document.documentElement,
-            body = document.body,
-            strip = document.getElementById('strip'),
-            nowPlaying = document.getElementById('now_playing'),
-            loadingSpinner = document.getElementById('loading_spinner'),
-            playButton = document.getElementById('play_button'),
-            pauseButton = document.getElementById('pause_button');
-
         // Hide pause button on load to fix iepngfix related error
-        playButton.style.display = 'none';
-        pauseButton.style.display = 'none';
+        Archivist.Ui.playButton.style.display = 'none';
+        Archivist.Ui.pauseButton.style.display = 'none';
 
         var stream = new Archivist.AudioStream('http://50.7.76.250:8765/stream', function () {
-            Archivist.addEvent(playButton, 'click', function (event) {
+            Archivist.addEvent(Archivist.Ui.playButton, 'click', function (event) {
                 stream.start();
-                nowPlaying.style.visibility = '';
-                playButton.style.display = 'none';
-                pauseButton.style.display = 'block';
+                Archivist.Ui.nowPlaying.style.visibility = '';
+                Archivist.Ui.playButton.style.display = 'none';
+                Archivist.Ui.pauseButton.style.display = 'block';
                 Archivist.preventDefault(event);
             });
 
-            Archivist.addEvent(pauseButton, 'click', function (event) {
+            Archivist.addEvent(Archivist.Ui.pauseButton, 'click', function (event) {
                 stream.stop();
-                nowPlaying.style.visibility = 'hidden';
-                pauseButton.style.display = 'none';
-                playButton.style.display = 'block';
+                Archivist.Ui.nowPlaying.style.visibility = 'hidden';
+                Archivist.Ui.pauseButton.style.display = 'none';
+                Archivist.Ui.playButton.style.display = 'block';
                 Archivist.preventDefault(event);
             });
 
-            loadingSpinner.style.display = 'none';
-            playButton.style.display = 'block';
+            Archivist.Ui.loadingSpinner.style.display = 'none';
+            Archivist.Ui.playButton.style.display = 'block';
         });
 
         var backgrounds = [
@@ -149,7 +153,7 @@
             if (currentBackground > backgrounds.length - 1) {
                 currentBackground = 0;
             }
-            html.style.backgroundImage = 'url("' + backgrounds[currentBackground] + '")';
+            Archivist.Ui.html.style.backgroundImage = 'url("' + backgrounds[currentBackground] + '")';
         };
 
         window.setTimeout(function () {
@@ -165,9 +169,13 @@
         }, 30 * 1000);
 
         var fixStripHeight = function () {
-            strip.style.height = '';
-            strip.style.height =
-                Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight)
+            Archivist.Ui.strip.style.height = '';
+            Archivist.Ui.strip.style.height =
+                Math.max(Archivist.Ui.body.scrollHeight,
+                    Archivist.Ui.body.offsetHeight,
+                    Archivist.Ui.html.clientHeight,
+                    Archivist.Ui.html.scrollHeight,
+                    Archivist.Ui.html.offsetHeight)
                 + 'px';
         };
 
