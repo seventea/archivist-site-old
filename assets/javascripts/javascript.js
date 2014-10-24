@@ -7,7 +7,7 @@
             body: document.body,
             strip: document.getElementById('strip'),
             nowPlaying: document.getElementById('now_playing'),
-            loadingSpinner: document.getElementById('loading_spinner'),
+            loading: document.getElementById('loading'),
             playButton: document.getElementById('play_button'),
             pauseButton: document.getElementById('pause_button'),
             streamError: document.getElementById('stream_error')
@@ -48,7 +48,7 @@
                 },
                 ontimeout: function () {
                     Archivist.Ui.streamError.style.display = 'block';
-                    Archivist.Ui.loadingSpinner.style.display = 'none';
+                    Archivist.Ui.loading.style.display = 'none';
                 }
             });
         };
@@ -137,7 +137,7 @@
                 Archivist.preventDefault(event);
             });
 
-            Archivist.Ui.loadingSpinner.style.display = 'none';
+            Archivist.Ui.loading.style.display = 'none';
             Archivist.Ui.playButton.style.display = 'block';
         });
 

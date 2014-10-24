@@ -58,8 +58,84 @@ body {
     overflow: hidden;
 }
 
-.loading-spinner {
-    padding: 20px 0;
+.loading {
+    padding: 46px 0;
+}
+
+.loading img {
+    padding: 0 5px;
+
+    opacity: 1;
+    -webkit-transition: opacity 0 ease-in-out;
+    -moz-transition: opacity 0 ease-in-out;
+    transition: opacity 0 ease-in-out;
+}
+
+.flash {
+    -webkit-animation-name: flash;
+    -webkit-animation-duration: 1.5s;
+    -webkit-animation-timing-function: linear;
+    -webkit-animation-iteration-count: infinite;
+    -moz-animation-name: flash;
+    -moz-animation-duration: 1.5s;
+    -moz-animation-timing-function: linear;
+    -moz-animation-iteration-count: infinite;
+    -o-animation-name: flash;
+    -o-animation-duration: 1.5s;
+    -o-animation-timing-function: linear;
+    -o-animation-iteration-count: infinite;
+    animation-name: flash;
+    animation-duration: 1.5s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+}
+
+@-webkit-keyframes flash {
+    0%, 75% {
+        opacity: 1.0;
+    }
+    50% {
+        opacity: 0.1;
+    }
+}
+
+@-moz-keyframes flash {
+    0%, 75% {
+        opacity: 1.0;
+    }
+    50% {
+        opacity: 0.1;
+    }
+}
+
+@-o-keyframes flash {
+    0%, 75% {
+        opacity: 1.0;
+    }
+    50% {
+        opacity: 0.1;
+    }
+}
+
+@keyframes flash {
+    0%, 75% {
+        opacity: 1.0;
+    }
+    50% {
+        opacity: 0.1;
+    }
+}
+
+.flash.two {
+    -webkit-animation-delay: 0.25s;
+    -moz-animation-delay: 0.25s;
+    animation-delay: 0.25s;
+}
+
+.flash.three {
+    -webkit-animation-delay: 0.5s;
+    -moz-animation-delay: 0.5s;
+    animation-delay: 0.5s;
 }
 
 .radio-icons a.radio-icon {
