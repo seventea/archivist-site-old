@@ -4,7 +4,7 @@ html {
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
-    min-width: 825px;
+    min-width: 786px;
 
     font-family: 'Droid Serif', serif;
     font-size: 18px;
@@ -30,9 +30,9 @@ body {
 
 .strip {
     background: url("../images/vertical_brush.png") repeat-y center top;
-    width: 775px;
+    width: 686px;
     float: right;
-    margin-right: 25px;
+    margin-right: 50px;
     height: 100%;
 }
 
@@ -47,8 +47,8 @@ body {
 }
 
 .logo img {
-    width: 786px;
-    height: 247px;
+    width: 686px;
+    height: 161px;
 }
 
 .radio-icons {
