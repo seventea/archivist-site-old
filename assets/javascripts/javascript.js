@@ -39,6 +39,7 @@
             var self = this;
 
             self.url = url;
+            self.playing = false;
 
             soundManager.setup({
                 url: 'assets/flash/',
@@ -57,12 +58,14 @@
             var self = this;
 
             self.sound.setVolume(100);
+            self.playing = true;
         };
 
         Archivist.AudioStream.prototype.stop = function () {
             var self = this;
 
             self.sound.setVolume(0);
+            self.playing = false;
         };
 
         Archivist.AudioStream.prototype.load = function (callback) {
@@ -135,6 +138,26 @@
                 Archivist.Ui.pauseButton.style.display = 'none';
                 Archivist.Ui.playButton.style.display = 'block';
                 Archivist.preventDefault(event);
+            });
+
+            Archivist.addEvent(document, 'keydown', function (event) {
+                var keyCode = event.keyCode || event.which;
+
+                if (keyCode == 32) {
+                    if (stream.playing) {
+                        stream.stop();
+                        Archivist.Ui.nowPlaying.style.visibility = 'hidden';
+                        Archivist.Ui.pauseButton.style.display = 'none';
+                        Archivist.Ui.playButton.style.display = 'block';
+                        Archivist.preventDefault(event);
+                    } else {
+                        stream.start();
+                        Archivist.Ui.nowPlaying.style.visibility = '';
+                        Archivist.Ui.playButton.style.display = 'none';
+                        Archivist.Ui.pauseButton.style.display = 'block';
+                        Archivist.preventDefault(event);
+                    }
+                }
             });
 
             Archivist.Ui.loading.style.display = 'none';
