@@ -58,15 +58,19 @@
         Archivist.AudioStream.prototype.start = function () {
             var self = this;
 
-            self.sound.setVolume(100);
-            self.playing = true;
+            if (!self.playing) {
+                self.sound.setVolume(100);
+                self.playing = true;
+            }
         };
 
         Archivist.AudioStream.prototype.stop = function () {
             var self = this;
 
-            self.sound.setVolume(0);
-            self.playing = false;
+            if (self.playing) {
+                self.sound.setVolume(0);
+                self.playing = false;
+            }
         };
 
         Archivist.AudioStream.prototype.load = function (callback) {
