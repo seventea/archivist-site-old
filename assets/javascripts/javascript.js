@@ -10,7 +10,8 @@
             loading: document.getElementById('loading'),
             playButton: document.getElementById('play_button'),
             pauseButton: document.getElementById('pause_button'),
-            streamError: document.getElementById('stream_error')
+            streamError: document.getElementById('stream_error'),
+            definition: document.getElementById('definition')
         };
 
         // Wrapper for addEventListener vs attachEvent
@@ -190,6 +191,78 @@
         window.setInterval(function () {
             nextBackground();
         }, 30 * 1000);
+
+        Archivist.removeTextWithDelay = function (element, delay, onComplete) {
+            var currentText = element.innerHTML.trim();
+
+            var removeTextWithDelayInterval = window.setInterval(function () {
+                currentText = currentText.substring(0, currentText.length - 1);
+                element.innerHTML = currentText;
+
+                if (currentText.length == 0) {
+                    clearInterval(removeTextWithDelayInterval);
+                    if (onComplete) {
+                        onComplete();
+                    }
+                }
+            }, delay);
+        };
+
+        Archivist.setTextWithDelay = function (element, text, delay, onComplete) {
+            var currentText = '';
+
+            var setTextWithDelayInterval = window.setInterval(function () {
+                currentText = text.substring(0, currentText.length + 1);
+                Archivist.Ui.definition.innerHTML = currentText;
+
+                if (currentText.length == text.length) {
+                    clearInterval(setTextWithDelayInterval);
+                    if (onComplete) {
+                        onComplete();
+                    }
+                }
+            }, delay);
+        };
+
+        Archivist.replaceTextWithDelay = function (element, text, delay, onComplete) {
+            Archivist.removeTextWithDelay(element, delay, function() {
+                Archivist.setTextWithDelay(element, text, delay, function() {
+                    if (onComplete) {
+                        onComplete();
+                    }
+                });
+            });
+        };
+
+        Archivist.definitions = [
+            'An attractive younger woman that has sexual relations with wealthy older men and records all conversations made between the two illegally. Then uses it as blackmail against said older men for monetary or public gain.',
+            'Archivists keep records that have enduring value as reliable memories of the past, and help people find and understand the information they need in those records.',
+            'An archivist is a nice name for male secretary. When a male secretary is embarrassed of their profession and they try to pretend they aren\'t just giving coffee to a boss, they call themselves archivists.'
+        ];
+
+        Archivist.currentDefinition = 0;
+        Archivist.nextDefinition = function (onComplete) {
+            var nextDefinition = Archivist.currentDefinition + 1;
+            if (nextDefinition > Archivist.definitions.length - 1) {
+                nextDefinition = 0;
+            }
+
+            Archivist.replaceTextWithDelay(Archivist.Ui.definition, Archivist.definitions[nextDefinition], 50, function () {
+                Archivist.currentDefinition = nextDefinition;
+                if (onComplete) {
+                    onComplete();
+                }
+            });
+        };
+
+        Archivist.definitionQueue = function (delay) {
+            window.setTimeout(function () {
+                Archivist.nextDefinition(function() {
+                    Archivist.definitionQueue(delay);
+                })
+            }, delay);
+        };
+        Archivist.definitionQueue(60 * 1000);
 
         var fixStripHeight = function () {
             Archivist.Ui.strip.style.height = '';
