@@ -41,6 +41,7 @@
 
             self.url = url;
             self.playing = false;
+            self.mobile = navigator.userAgent.match(/(ipad|iphone|ipod|android)/i);
 
             soundManager.setup({
                 url: 'assets/flash/',
@@ -59,6 +60,11 @@
             var self = this;
 
             if (!self.playing) {
+                if (self.sound == null) {
+                    self.sound = self.load();
+                }
+
+                self.sound.play();
                 self.sound.setVolume(100);
                 self.playing = true;
             }
@@ -69,6 +75,13 @@
 
             if (self.playing) {
                 self.sound.setVolume(0);
+
+                if (self.mobile) {
+                    self.sound.stop();
+                    self.sound.destruct();
+                    self.sound = null;
+                }
+
                 self.playing = false;
             }
         };
