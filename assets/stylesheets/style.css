@@ -167,3 +167,7 @@ body {
 .social-icons {
     text-align: center;
 }
+
+.social-icons .download-stream {
+    margin-left: 20px;
+}
