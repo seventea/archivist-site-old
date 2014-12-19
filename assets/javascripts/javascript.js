@@ -47,7 +47,7 @@
                 url: 'assets/flash/',
                 preferFlash: true,
                 onready: function () {
-                    self.sound = self.load(callback);
+                    callback();
                 },
                 ontimeout: function () {
                     Archivist.Ui.streamError.style.display = 'block';
@@ -56,17 +56,24 @@
             });
         };
 
-        Archivist.AudioStream.prototype.start = function () {
+        Archivist.AudioStream.prototype.start = function (callback) {
             var self = this;
+
+            var nowPlaying = function () {
+                self.sound.setVolume(100);
+                self.playing = true;
+
+                if (callback) {
+                    callback();
+                }
+            };
 
             if (!self.playing) {
                 if (self.sound == null) {
-                    self.sound = self.load();
+                    self.sound = self.load(nowPlaying);
+                } else {
+                    nowPlaying();
                 }
-
-                self.sound.play();
-                self.sound.setVolume(100);
-                self.playing = true;
             }
         };
 
@@ -143,10 +150,13 @@
 
         var stream = new Archivist.AudioStream('http://50.7.76.250:8765/stream', function () {
             Archivist.addEvent(Archivist.Ui.playButton, 'click', function (event) {
-                stream.start();
-                Archivist.Ui.nowPlaying.style.visibility = '';
                 Archivist.Ui.playButton.style.display = 'none';
-                Archivist.Ui.pauseButton.style.display = 'block';
+                Archivist.Ui.loading.style.display = 'block';
+                stream.start(function() {
+                    Archivist.Ui.loading.style.display = 'none';
+                    Archivist.Ui.pauseButton.style.display = 'block';
+                    Archivist.Ui.nowPlaying.style.visibility = '';
+                });
                 Archivist.preventDefault(event);
             });
 
